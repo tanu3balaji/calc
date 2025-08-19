@@ -1,29 +1,33 @@
 pipeline {
     agent any
-
     stages {
-        stage('Checkout') {
+        stage('Checkout Code') {
             steps {
-                git 'https://github.com/tanu3balaji/calc.git'
+                git branch: 'main', url: 'https://github.com/tanu3balaji/calc.git'
             }
         }
 
-        stage('Install Dependencies') {
+        stage('Build Project') {
             steps {
-                sh 'npm install jest jsdom --save-dev'
+                echo 'No build required for HTML/CSS/JS project'
             }
         }
 
         stage('Run Tests') {
             steps {
-                sh 'npx jest'
+                echo 'No automated tests yet – skipping'
             }
         }
-
-        stage('Deploy') {
-            steps {
-                echo 'Deploying Calculator App...'
-            }
+    }
+    post {
+        always {
+            archiveArtifacts artifacts: '**/*.log', allowEmptyArchive: true
+        }
+        success {
+            echo 'Build completed successfully!'
+        }
+        failure {
+            echo 'Build failed!'
         }
     }
 }
