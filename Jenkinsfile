@@ -29,5 +29,8 @@ pipeline {
         failure {
             echo 'Build failed!'
         }
+        // Triggering Jenkins again
+
+
     }
 }
